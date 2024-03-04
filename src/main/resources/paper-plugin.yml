@@ -1,0 +1,8 @@
+name: FriendsCraft
+version: '${version}'
+main: nl.friendscraft.friendscraft.FriendsCraft
+api-version: '1.20'
+prefix: Friends-Craft
+authors: [ Gilles ]
+description: De algemene Friends-Craft plugin.
+commands:
