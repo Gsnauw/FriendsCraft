@@ -23,9 +23,6 @@ public class DefaultConfig {
 
 
 
-
-
-
     @SuppressWarnings("static-access")
     public DefaultConfig(String filename, String resource, Plugin instance) {
         this.load(filename, resource, instance);
@@ -63,7 +60,7 @@ public class DefaultConfig {
 
     public void reload() {
         try {
-            config.load(CONFIG_FILE);
+            this.config.load(CONFIG_FILE);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

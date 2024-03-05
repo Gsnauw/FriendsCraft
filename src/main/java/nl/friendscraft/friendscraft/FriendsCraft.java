@@ -18,8 +18,8 @@ public final class FriendsCraft extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        defaultConfig = new DefaultConfig("config.yml",this);
-        messageConfig = new MessageConfig("message.yml",this);
+        defaultConfig=   new DefaultConfig("config.yml",this);
+        messageConfig=  new MessageConfig("message.yml",this);
 
         this.getCommand("friendscraftadmin").setExecutor(new AdminCommand(this));
         this.getServer().getPluginManager().registerEvents(new DoubleShulkerShells(), this);
@@ -34,7 +34,7 @@ public final class FriendsCraft extends JavaPlugin {
         Bukkit.getServer().getLogger().info("[Friends-Craft] Plugin disabled, Bye!");
     }
 
-    public void reloadconfig() {
+    public void reload() {
         defaultConfig.reload();
         messageConfig.reload();
         Debug.format("Plugin reload Main class.");

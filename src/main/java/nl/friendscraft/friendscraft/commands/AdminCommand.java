@@ -31,7 +31,7 @@ public class AdminCommand implements CommandExecutor {
                 switch (args[0]) {
                     case "reload":
                         if (sender.hasPermission("friendscraft.admin.reload")) {
-                            this.mainclass.reloadconfig();
+                            this.mainclass.reload();
                             Debug.format("Plugin reload Command.");
                             sender.sendMessage(ChatUtil.formatprefix("&9De plugin is gereload."));
                             break;

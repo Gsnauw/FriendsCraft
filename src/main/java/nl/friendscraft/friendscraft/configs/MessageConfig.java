@@ -61,6 +61,7 @@ public class MessageConfig {
     public void reload() {
         try {
             this.config.load(CONFIG_FILE);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
