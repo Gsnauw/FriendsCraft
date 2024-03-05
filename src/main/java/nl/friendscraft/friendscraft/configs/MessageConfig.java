@@ -57,6 +57,17 @@ public class MessageConfig {
         readConfig(MessageConfig.class, null);
     }
 
+
+    public void reload() {
+        try {
+            this.config.load(CONFIG_FILE);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        readConfig(MessageConfig.class, null);
+    }
+
     static void readConfig(Class<?> clazz, Object instance) {
         for (Method method : clazz.getDeclaredMethods()) {
             if (Modifier.isPrivate(method.getModifiers())) {

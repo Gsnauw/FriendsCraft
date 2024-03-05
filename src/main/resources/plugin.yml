@@ -10,6 +10,11 @@ commands:
     description: Het Friends-Craft Admin command.
     aliases: [ fca ]
     permission: friendscraft.admin
+  maintenance:
+    description: Het Friends-Craft maintenance command.
+    aliases: [ fcm ]
+    permission: friendscraft.maintenance
+
 permissions:
   friendscraft.*:
     description: Geeft alle permissies in één keer.

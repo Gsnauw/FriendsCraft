@@ -1,6 +1,7 @@
 package nl.friendscraft.friendscraft.utils;
 
 import nl.friendscraft.friendscraft.configs.MessageConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public class ChatUtil {
@@ -17,6 +18,18 @@ public class ChatUtil {
     }
 
     public static void playerCommand() {
-        System.out.println("Je moet een speler zijn om deze actie uit te voeren.");
+        Bukkit.getServer().getLogger().info("Je moet een speler zijn om deze actie uit te voeren.");
+    }
+    public static String consoleCommand() {
+        return format(MessageConfig.prefix + "Deze actie kan alleen console uitvoeren.");
+    }
+
+    public static void sendConsole(String text) {
+        Bukkit.getServer().getLogger().info(text);
+    }
+
+    static String ConsolePrefix = "[Friends-Craft] ";
+    public static void sendConsolePrefix(String text) {
+        Bukkit.getServer().getLogger().info(ConsolePrefix + text);
     }
 }

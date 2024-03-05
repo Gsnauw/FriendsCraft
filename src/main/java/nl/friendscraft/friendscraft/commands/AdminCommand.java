@@ -17,14 +17,13 @@ public class AdminCommand implements CommandExecutor {
         this.mainclass = mainclass;
     }
 
+    String commandHelp = "/fca <reload, help>";
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-
             if (args.length == 0) {
-                sender.sendMessage(ChatUtil.formatprefix("&cOnjuist commando, gebruik: /fca <reload, help>"));
+                sender.sendMessage(ChatUtil.formatprefix("&cOnjuist commando, gebruik: " + commandHelp));
                 return false;
             }
 
@@ -44,10 +43,6 @@ public class AdminCommand implements CommandExecutor {
                         }
                 }
             }
-        }
-        else {
-            ChatUtil.playerCommand();
-        }
         return false;
     }
 }
