@@ -25,4 +25,4 @@ permissions:
     description: Geeft alle user permissies in één keer.
     default: op
     children:
-      friendscraft.admin.help: true
+      friendscraft.help: true

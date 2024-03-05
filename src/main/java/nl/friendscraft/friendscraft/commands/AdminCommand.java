@@ -38,8 +38,8 @@ public class AdminCommand implements CommandExecutor {
                             break;
                         }
                     case "help":
-                        if (sender.hasPermission("friendscraft.user")) {
-                            sender.sendMessage(ChatUtil.formatprefix("&0Gebruik: /fca <reload, help>"));
+                        if (sender.hasPermission("friendscraft.help")) {
+                            sender.sendMessage(ChatUtil.formatprefix("&9Gebruik: /fca <reload, help>"));
                             break;
                         }
                 }
