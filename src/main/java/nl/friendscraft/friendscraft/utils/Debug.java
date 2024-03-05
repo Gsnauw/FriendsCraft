@@ -5,9 +5,8 @@ import org.bukkit.Bukkit;
 
 public class Debug {
 
-    static boolean debug = DefaultConfig.debug;
     public static void format(String text) {
-        if (debug) {
+        if (DefaultConfig.debug) {
             String formated = "[Friends-Craft Debug] " + text;
             Bukkit.getServer().getLogger().info(formated);
         }

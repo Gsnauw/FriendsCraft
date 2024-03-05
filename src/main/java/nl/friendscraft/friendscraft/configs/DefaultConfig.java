@@ -21,8 +21,6 @@ public class DefaultConfig {
 
     public static YamlConfiguration config;
 
-
-
     @SuppressWarnings("static-access")
     public DefaultConfig(String filename, String resource, Plugin instance) {
         this.load(filename, resource, instance);
@@ -55,19 +53,19 @@ public class DefaultConfig {
         config.options().header(HEADER);
         config.options().copyDefaults(true);
 
-        readConfig(nl.friendscraft.friendscraft.configs.DefaultConfig.class, null);
+        readConfig(DefaultConfig.class, null);
     }
 
     public void reload() {
         try {
             this.config.load(CONFIG_FILE);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         readConfig(DefaultConfig.class, null);
     }
-
 
     static void readConfig(Class<?> clazz, Object instance) {
         for (Method method : clazz.getDeclaredMethods()) {

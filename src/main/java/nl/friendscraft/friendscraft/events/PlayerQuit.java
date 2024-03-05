@@ -10,15 +10,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuit  implements Listener {
 
-        private String quitMessage = ChatUtil.format(MessageConfig.playerquit);
-
         @EventHandler
         public void onPlayerQuit(PlayerQuitEvent event) {
-            Debug.format("Start quit");
+            String quitMessage = ChatUtil.format(MessageConfig.playerquit);
             String playerName = event.getPlayer().getName();
             String formattedQuitMessage = quitMessage.replace("%player%", playerName);
-            Debug.format("Quit naam: " + playerName);
             event.setQuitMessage(formattedQuitMessage);
-            Debug.format("Quit einde: " + playerName + " heeft de server verlaten.");
+            Debug.format("Quit: " + playerName + " heeft de server verlaten.");
         }
 }

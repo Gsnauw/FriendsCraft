@@ -9,15 +9,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoin  implements Listener {
 
-    private String joinMessage = ChatUtil.format(MessageConfig.playerjoin);
-
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Debug.format("Start join");
+        String joinMessage = ChatUtil.format(MessageConfig.playerjoin);
         String playerName = event.getPlayer().getName();
         String formattedJoinMessage = joinMessage.replace("%player%", playerName);
-        Debug.format("Join naam: " + playerName);
         event.setJoinMessage(formattedJoinMessage);
-        Debug.format("Join einde: " + playerName + " is gejoined");
+        Debug.format("Join: " + playerName + " is gejoined.");
     }
 }

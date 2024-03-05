@@ -42,7 +42,6 @@ public class MessageConfig {
     private static void init(File configFile) {
         CONFIG_FILE = configFile;
         config = new YamlConfiguration();
-
         try {
             config.load(CONFIG_FILE);
         } catch (IOException ex) {
@@ -61,7 +60,6 @@ public class MessageConfig {
     public void reload() {
         try {
             this.config.load(CONFIG_FILE);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
