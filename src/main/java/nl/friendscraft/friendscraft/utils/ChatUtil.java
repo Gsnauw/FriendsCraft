@@ -16,7 +16,7 @@ public class ChatUtil {
         return formatprefix(MessageConfig.geenpermissie);
     }
 
-    public static String playerCommand() {
-        return format("&cJe moet een speler zijn om deze actie uit te voeren.");
+    public static void playerCommand() {
+        System.out.println("Je moet een speler zijn om deze actie uit te voeren.");
     }
 }

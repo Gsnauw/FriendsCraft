@@ -5,6 +5,8 @@ import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.events.DoubleShulkerShells;
 import nl.friendscraft.friendscraft.events.PlayerJoin;
 import nl.friendscraft.friendscraft.events.PlayerQuit;
+import nl.friendscraft.friendscraft.utils.ChatUtil;
+import nl.friendscraft.friendscraft.utils.Debug;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import nl.friendscraft.friendscraft.configs.DefaultConfig;
@@ -17,8 +19,8 @@ public final class FriendsCraft extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        defaultConfig=    new DefaultConfig("config.yml",this);
-        messageConfig=   new MessageConfig("message.yml",this);
+        defaultConfig = new DefaultConfig("config.yml",this);
+        messageConfig = new MessageConfig("message.yml",this);
 
         this.getCommand("friendscraftadmin").setExecutor(new AdminCommand(this));
         this.getServer().getPluginManager().registerEvents(new DoubleShulkerShells(), this);
@@ -34,8 +36,9 @@ public final class FriendsCraft extends JavaPlugin {
     }
 
     public void reloadconfig() {
-        defaultConfig=    new DefaultConfig("config.yml",this);
-        messageConfig=   new MessageConfig("message.yml",this);
+        defaultConfig = new DefaultConfig("config.yml",this);
+        messageConfig = new MessageConfig("message.yml",this);
+        Debug.format("Plugin reload Main class.");
     }
 
 }
