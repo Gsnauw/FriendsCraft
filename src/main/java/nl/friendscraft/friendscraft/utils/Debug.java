@@ -9,9 +9,8 @@ public class Debug {
     static boolean debug = DefaultConfig.debug;
     public static void format(String text) {
         if (debug) {
-            String formated = ChatColor.DARK_GREEN + "[Debug]" + ChatColor.GREEN + text;
+            String formated = "[Debug] " + text;
             Bukkit.getServer().getLogger().info(formated);
         }
     }
 }
-

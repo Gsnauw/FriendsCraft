@@ -11,13 +11,16 @@ import nl.friendscraft.friendscraft.configs.DefaultConfig;
 
 public final class FriendsCraft extends JavaPlugin {
 
+    DefaultConfig defaultConfig;
+    MessageConfig messageConfig;
+
     @Override
     public void onEnable() {
 
-        new DefaultConfig("config.yml",this);
-        new MessageConfig("message.yml",this);
+        defaultConfig=    new DefaultConfig("config.yml",this);
+        messageConfig=   new MessageConfig("message.yml",this);
 
-        this.getCommand("friendscraftadmin").setExecutor(new AdminCommand());
+        this.getCommand("friendscraftadmin").setExecutor(new AdminCommand(this));
         this.getServer().getPluginManager().registerEvents(new DoubleShulkerShells(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
@@ -29,4 +32,10 @@ public final class FriendsCraft extends JavaPlugin {
     public void onDisable() {
         Bukkit.getServer().getLogger().info("[Friends-Craft] Plugin disabled, Bye!");
     }
+
+    public void reloadconfig() {
+        defaultConfig=    new DefaultConfig("config.yml",this);
+        messageConfig=   new MessageConfig("message.yml",this);
+    }
+
 }
