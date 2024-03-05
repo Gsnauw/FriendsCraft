@@ -39,7 +39,7 @@ public class AdminCommand implements CommandExecutor {
                         }
                     case "help":
                         if (sender.hasPermission("friendscraft.user")) {
-                            sender.sendMessage("Help command basis");
+                            sender.sendMessage(ChatUtil.formatprefix("&0Gebruik: /fca <reload, help>"));
                             break;
                         }
                 }
