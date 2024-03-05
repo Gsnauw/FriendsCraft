@@ -6,3 +6,22 @@ prefix: Friends-Craft
 authors: [ Gilles ]
 description: De algemene Friends-Craft plugin.
 commands:
+  friendscraftadmin:
+    description: Het Friends-Craft Admin command.
+    permission: friendscraft.admin
+permissions:
+      friendscraft.*:
+        description: Geeft alle permissies in één keer.
+        default: op
+        children:
+          friendscraft.admin.reload: true
+      friendscraft.admin.*:
+        description: Geeft alle admin permissies in één keer.
+        default: op
+        children:
+          friendscraft.admin.reload: true
+      friendscraft.user:
+        description: Geeft alle user permissies in één keer.
+        default: op
+        children:
+          friendscraft.admin.help: true

@@ -1,5 +1,6 @@
 package nl.friendscraft.friendscraft;
 
+import nl.friendscraft.friendscraft.commands.AdminCommand;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.events.DoubleShulkerShells;
 import nl.friendscraft.friendscraft.events.PlayerJoin;
@@ -13,9 +14,10 @@ public final class FriendsCraft extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        DefaultConfig defaultconfig = new DefaultConfig("config.yml",this);
-        MessageConfig messageconfig = new MessageConfig("message.yml",this);
+        new DefaultConfig("config.yml",this);
+        new MessageConfig("message.yml",this);
 
+        this.getCommand("friendscraftadmin").setExecutor(new AdminCommand());
         this.getServer().getPluginManager().registerEvents(new DoubleShulkerShells(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuit(), this);

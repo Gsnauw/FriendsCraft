@@ -1,7 +1,7 @@
 package nl.friendscraft.friendscraft.events;
 
 import nl.friendscraft.friendscraft.configs.MessageConfig;
-import org.bukkit.Bukkit;
+import nl.friendscraft.friendscraft.utils.Debug;
 import org.bukkit.event.EventHandler;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
 import org.bukkit.event.Listener;
@@ -13,11 +13,11 @@ public class PlayerJoin  implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Bukkit.getServer().getLogger().info("Start join");
+        Debug.format("Start join");
         String playerName = event.getPlayer().getName();
         String formattedJoinMessage = joinMessage.replace("%player%", playerName);
-        Bukkit.getServer().getLogger().info("Join naam: " + playerName);
+        Debug.format("Join naam: " + playerName);
         event.setJoinMessage(formattedJoinMessage);
-        Bukkit.getServer().getLogger().info("Join einde: " + playerName + " is gejoined");
+        Debug.format("Join einde: " + playerName + " is gejoined");
     }
 }

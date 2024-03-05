@@ -1,5 +1,6 @@
 package nl.friendscraft.friendscraft.events;
 
+import nl.friendscraft.friendscraft.utils.Debug;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -16,6 +17,8 @@ public class DoubleShulkerShells  implements Listener {
             event.getDrops().clear();
             ItemStack shulkerStack = new ItemStack(Material.SHULKER_SHELL, 2);
             event.getEntity().getWorld().dropItemNaturally(entity.getLocation(), shulkerStack);
+            Debug.format("Shulker shells gedropt.");
+            //op locatie aan debug toevoegen
         }
 
     }

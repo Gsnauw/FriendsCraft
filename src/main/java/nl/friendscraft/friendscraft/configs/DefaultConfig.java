@@ -116,8 +116,8 @@ public class DefaultConfig {
         }
 
 
-        public static String help = "&cAAAAAAAAH";
-        private static void DefaultMessages() {
-            help = getString("help", help);
+        public static Boolean debug = false;
+        private static void DefaultConfigs() {
+            debug = getBoolean("Debug", debug);
         }
     }
