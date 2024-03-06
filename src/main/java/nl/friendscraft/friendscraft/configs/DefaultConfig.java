@@ -136,12 +136,4 @@ public class DefaultConfig {
         debug = getBoolean("Debug", debug);
     }
 
-
-    public static List<String> uuidlist = Arrays.asList(new String[]{"adddee48-43e3-4141-a97c-5f60093c6ad4","d8260d41-7453-4c11-9c8b-3e6d1d6642aa"
-            ,"3cfc5df8-4e20-4a43-9c50-01e6aedf2ff2","b8fe3e59-f554-42ce-bda9-21c025c950c1"});
-
-    private static void ietsmetUUIDS() {
-        uuidlist = getList("settings.uuids", uuidlist);
-    }
-
 }

@@ -2,7 +2,6 @@ package nl.friendscraft.friendscraft.events;
 
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.utils.Debug;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
 import org.bukkit.event.Listener;

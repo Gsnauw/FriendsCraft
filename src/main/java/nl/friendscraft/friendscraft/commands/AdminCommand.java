@@ -19,8 +19,19 @@ public class AdminCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!(sender instanceof Player player)) {
-            ChatUtil.playerCommand();
-            return false;
+
+            if (args.length == 1) {
+                switch (args[0]) {
+                    case "reload":
+                        if (sender.hasPermission("friendscraft.admin.reload")) {
+                            FriendsCraft.getInstance().reload();
+                            ChatUtil.sendConsolePrefix("De plugin is gereload.");
+                            break;
+                        }
+                }
+                ChatUtil.playerCommand();
+                return false;
+            }
         }
 
             if (args.length == 0) {
@@ -33,9 +44,6 @@ public class AdminCommand implements CommandExecutor {
                     case "reload":
                         if (sender.hasPermission("friendscraft.admin.reload")) {
                             FriendsCraft.getInstance().reload();
-                            System.out.println("debug is: " + DefaultConfig.debug);
-                            System.out.println("debug is: " + MessageConfig.playerjoin);
-                            System.out.println("debug is: " + MessageConfig.playerquit);
                             sender.sendMessage(ChatUtil.formatprefix("&9De plugin is gereload."));
                             break;
                         }
@@ -49,6 +57,6 @@ public class AdminCommand implements CommandExecutor {
                         break;
                 }
             }
-        return false;
-    }
+            return false;
+        }
 }

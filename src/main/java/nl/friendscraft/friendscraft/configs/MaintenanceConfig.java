@@ -132,7 +132,7 @@ public class MaintenanceConfig {
     }
 
 
-    public static String maintenanceKick = "De server ondergaat momenteel maintenance. Probeer het later opnieuw.";
+    public static String maintenanceKick = "De server ondergaat momenteel onderhoud. Probeer het later opnieuw.";
     public static String maintenanceOnlineKick = "De server is in maintenance mode geplaatst. Join later terug.";
 
     private static void maintenanceMessages() {
@@ -140,8 +140,8 @@ public class MaintenanceConfig {
         maintenanceOnlineKick = getString("kick_bericht_online", maintenanceOnlineKick);
     }
 
-    public static Boolean whitelistStatus = true;
-    public static List<String> whitelist = Arrays.asList(new String[]{""});
+    public static Boolean whitelistStatus = false;
+    public static List<String> whitelist = Arrays.asList();
     private static void maintenanceConfig() {
         whitelist = getList("users", whitelist);
         whitelistStatus = getBoolean("whitelist", whitelistStatus);
