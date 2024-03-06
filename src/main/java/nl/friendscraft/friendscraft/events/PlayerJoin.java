@@ -1,5 +1,6 @@
 package nl.friendscraft.friendscraft.events;
 
+import nl.friendscraft.friendscraft.checks.MaintenanceCheck;
 import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.utils.Debug;
@@ -19,18 +20,27 @@ public class PlayerJoin implements Listener {
 
         boolean WhitelistStatus = MaintenanceConfig.whitelistStatus;
         String joinMessage = ChatUtil.format(MessageConfig.playerjoin);
+        String playerName = event.getPlayer().getName();
+        String formattedJoinMessage = joinMessage.replace("%player%", playerName);
 
         if (WhitelistStatus) {
             UUID playerUUID = event.getPlayer().getUniqueId();
-
+            if (MaintenanceCheck.checkMaintenance(playerUUID)) {
+                event.setJoinMessage(formattedJoinMessage);
+                Debug.format(playerName + "staat op de maintenance whitelist en is toegelaten.");
+            }
+            else {
+                event.getPlayer().kickPlayer(MessageConfig.maintenanceKick);
+                Debug.format(playerName + "staat niet op de maintenance whitelist en is gekickt.");
+            }
             return;
         }
 
-        String playerName = event.getPlayer().getName();
-        String formattedJoinMessage = joinMessage.replace("%player%", playerName);
-        event.setJoinMessage(formattedJoinMessage);
-        Debug.format("Join einde: " + playerName + " is gejoined");
-
+        if (!WhitelistStatus) {
+                event.setJoinMessage(formattedJoinMessage);
+                Debug.format(playerName + "is gejoined, maintenance uit.");
+            return;
+        }
 
         //haal de lijst uit de config (als String)
         List<String> whitelist = MaintenanceConfig.whitelist;
@@ -41,7 +51,6 @@ public class PlayerJoin implements Listener {
                 .map(u -> UUID.fromString(u))
                 .collect(Collectors.toList());
 
-
         //zet middelste lijst weer terug naar String
         List<String> whitelistString = whitelistUUID.stream()
                 .map(u -> u.toString())
@@ -50,11 +59,6 @@ public class PlayerJoin implements Listener {
 
         //lijst moet wel String zijn,
         MaintenanceConfig.save("maintenance.whitelisted",whitelistString);
-
-    }
-
-    private void join() {
-
 
     }
 }
