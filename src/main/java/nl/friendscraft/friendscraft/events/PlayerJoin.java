@@ -1,5 +1,6 @@
 package nl.friendscraft.friendscraft.events;
 
+import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.utils.Debug;
 import org.bukkit.event.EventHandler;
@@ -7,14 +8,53 @@ import nl.friendscraft.friendscraft.utils.ChatUtil;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerJoin  implements Listener {
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+public class PlayerJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+
+        boolean WhitelistStatus = MaintenanceConfig.whitelistStatus;
         String joinMessage = ChatUtil.format(MessageConfig.playerjoin);
+
+        if (WhitelistStatus) {
+            UUID playerUUID = event.getPlayer().getUniqueId();
+
+            return;
+        }
+
         String playerName = event.getPlayer().getName();
         String formattedJoinMessage = joinMessage.replace("%player%", playerName);
         event.setJoinMessage(formattedJoinMessage);
-        Debug.format("Join: " + playerName + " is gejoined.");
+        Debug.format("Join einde: " + playerName + " is gejoined");
+
+
+        //haal de lijst uit de config (als String)
+        List<String> whitelist = MaintenanceConfig.whitelist;
+
+
+        //haal lijst om en zet hem om naar UUID
+        List<UUID> whitelistUUID = MaintenanceConfig.whitelist.stream()
+                .map(u -> UUID.fromString(u))
+                .collect(Collectors.toList());
+
+
+        //zet middelste lijst weer terug naar String
+        List<String> whitelistString = whitelistUUID.stream()
+                .map(u -> u.toString())
+                .collect(Collectors.toList());
+
+
+        //lijst moet wel String zijn,
+        MaintenanceConfig.save("maintenance.whitelisted",whitelistString);
+
+    }
+
+    private void join() {
+
+
     }
 }
