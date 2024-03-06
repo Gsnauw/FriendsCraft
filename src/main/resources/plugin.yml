@@ -17,15 +17,17 @@ commands:
 
 permissions:
   friendscraft.*:
-    description: Geeft alle permissies in één keer.
+    description: Geeft alle plugin permissies in één keer.
     default: op
     children:
-      friendscraft.admin.reload: true
+      friendscraft.admin.*: true
+      friendscraft.maintenance.*: true
   friendscraft.admin.*:
-    description: Geeft alle admin permissies in één keer.
+    description: Geeft alle admin en user permissies in één keer.
     default: op
     children:
       friendscraft.admin.reload: true
+      friendscraft.user: true
   friendscraft.user:
     description: Geeft alle user permissies in één keer.
     default: op
