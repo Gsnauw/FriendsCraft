@@ -131,12 +131,19 @@ public class MaintenanceConfig {
         return config.getDouble(path, config.getDouble(path));
     }
 
-    public static Boolean whitelistStatus = true;
-    public static List<String> whitelist = Arrays.asList(new String[]{""});
 
-    private static void maintenanceConfig() {
-        whitelist = getList("maintenance.whitelisted", whitelist);
-        whitelistStatus = getBoolean("maintenance.whitelist", whitelistStatus);
+    public static String maintenanceKick = "De server ondergaat momenteel maintenance. Probeer het later opnieuw.";
+    public static String maintenanceOnlineKick = "De server is in maintenance mode geplaatst. Join later terug.";
+
+    private static void maintenanceMessages() {
+        maintenanceKick = getString("kick_bericht", maintenanceKick);
+        maintenanceOnlineKick = getString("kick_bericht_online", maintenanceOnlineKick);
     }
 
+    public static Boolean whitelistStatus = true;
+    public static List<String> whitelist = Arrays.asList(new String[]{""});
+    private static void maintenanceConfig() {
+        whitelist = getList("users", whitelist);
+        whitelistStatus = getBoolean("whitelist", whitelistStatus);
+    }
 }

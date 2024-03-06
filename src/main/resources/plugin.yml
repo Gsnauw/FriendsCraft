@@ -31,3 +31,14 @@ permissions:
     default: op
     children:
       friendscraft.help: true
+  friendscraft.maintenance.*:
+    description: Geeft alle maintenance permissies in één keer.
+    default: op
+    children:
+      friendscraft.maintenance.enable: true
+      friendscraft.maintenance.disable: true
+      friendscraft.maintenance.status: true
+      friendscraft.maintenance.help: true
+      friendscraft.maintenance.add: true
+      friendscraft.maintenance.remove: true
+      friendscraft.maintenance.list: true
