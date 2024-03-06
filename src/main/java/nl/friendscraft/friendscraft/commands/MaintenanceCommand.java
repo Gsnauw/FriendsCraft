@@ -124,35 +124,32 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
             switch (args[0]) {
                 case "add":
                     if (sender.hasPermission("friendscraft.maintenance.add")) {
-                        String player = Bukkit.getOfflinePlayer(args[1]).getName();
+
+
+                        Player player = Bukkit.getOfflinePlayer(args[1]).getPlayer();
                         if (player != null) {
-                            UUID playerUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId();
-                            if (!(MaintenanceCheck.checkMaintenance(playerUUID))) {
-                                List<UUID> whitelistUUID = MaintenanceConfig.whitelist.stream()
-                                        .map(u -> UUID.fromString(u))
-                                        .collect(Collectors.toList());
+                        if (!(MaintenanceCheck.checkMaintenance(player.getUniqueId()))) {
+                            List<String> tmplist = new ArrayList(MaintenanceConfig.whitelist);
+                            tmplist.add(player.getUniqueId().toString());
 
-                                whitelistUUID.add(playerUUID);
-
-                                List<String> whitelistString = whitelistUUID.stream()
-                                        .map(u -> u.toString())
-                                        .collect(Collectors.toList());
-
-                                MaintenanceConfig.save("users", whitelistString);
-                                FriendsCraft.getInstance().reloadMaintenance();
-                                sender.sendMessage(ChatUtil.formatprefix("&9Speler met naam &b" + player + "&9 werd &atoegevoegd &9aan de maintenance whitelist."));
-                                break;
-                            }
-                            if (MaintenanceCheck.checkMaintenance(playerUUID)) {
-                                sender.sendMessage(ChatUtil.formatprefix("&cDeze speler staat al op de whitelist momenteel."));
-                                break;
-                            }
-                        } else {
-                            sender.sendMessage(ChatUtil.formatprefix("&cDeze speler bestaat niet of is nog nooit online geweest."));
+                            MaintenanceConfig.save("users", tmplist);
+                            FriendsCraft.getInstance().reloadMaintenance();
+                            sender.sendMessage(ChatUtil.formatprefix("&9Speler met naam &b" + player.getName() + "&9 werd &atoegevoegd &9aan de maintenance whitelist."));
                             break;
                         }
+                        if (MaintenanceCheck.checkMaintenance(player.getUniqueId())) {
+                            sender.sendMessage(ChatUtil.formatprefix("&cDeze speler staat al op de whitelist momenteel."));
+                            break;
+                        }
+                        } else {
+                        sender.sendMessage(ChatUtil.formatprefix("&cDeze speler bestaat niet of is nog nooit online geweest."));
+                        break;
                     }
+
+                    }
+                    sender.sendMessage(ChatUtil.noPermission());
                     break;
+
 
                 case "remove":
                     if (sender.hasPermission("friendscraft.maintenance.remove")) {
@@ -187,6 +184,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
                             break;
                         }
                     }
+                    sender.sendMessage(ChatUtil.noPermission());
                     break;
             }
         }
