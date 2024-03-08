@@ -126,7 +126,11 @@ public class MessageConfig {
     }
 
     public static String prefix = "&7[&bFriends&6-&9Craft&7] &8-> ";
-    public static String geenpermissie = "&cJe mag deze actie uit te voeren.";
+    public static String geenpermissie = "&cJe mag deze actie niet uitvoeren.";
+    public static String onjuistCommand = "&cOnjuist commando, gebruik: %commands%";
+    public static String help = "&9Gebruik: %commands%";
+    public static String reload = "De plugin is gereload.";
+
     private static void DefaultMessages() {
         prefix = getString("prefix", prefix);
         geenpermissie = getString("geenpermissie", geenpermissie);

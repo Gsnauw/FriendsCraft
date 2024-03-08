@@ -4,10 +4,10 @@ import com.earth2me.essentials.User;
 import nl.friendscraft.friendscraft.FriendsCraft;
 import nl.friendscraft.friendscraft.checks.MaintenanceCheck;
 import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
+import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.events.MaintenanceKick;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 
 public class MaintenanceCommand implements CommandExecutor, TabCompleter {
 
-    String commandHelp = "/fcm <enable, disable, help, status, list, add (naam), remove (naam)>";
+    String commandHelp = "/fcm &b<add (naam), disable, enable, help, list, remove (naam) of status>.";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (args.length <= 0) {
-            sender.sendMessage(ChatUtil.formatprefix("&cOnjuist commando, gebruik: " + commandHelp));
+        if (args.length == 0) {
+            sender.sendMessage(ChatUtil.formatprefix(MessageConfig.onjuistCommand.replace("%commands%", commandHelp).replace("&b", "")));
             return false;
         }
 
@@ -38,171 +38,179 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
             switch (args[0]) {
                 case "enable":
                     if (sender.hasPermission("friendscraft.maintenance.enable")) {
-                        if (MaintenanceConfig.whitelistStatus) {
+                        if (!(MaintenanceConfig.whitelistStatus)) {
                             MaintenanceConfig.save("whitelist", true);
                             FriendsCraft.getInstance().reloadMaintenance();
                             MaintenanceKick.enable();
-                            sender.sendMessage(ChatUtil.formatprefix("&9De maintenance mode is &aingeschakeld."));
+                            sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.enabled));
                             break;
                         }
-                        if (!(MaintenanceConfig.whitelistStatus)) {
-                            sender.sendMessage(ChatUtil.formatprefix("&cDe maintenance mode is al ingeschakeld."));
+                        if (MaintenanceConfig.whitelistStatus) {
+                            sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.enabledAl));
                             break;
                         }
                     }
                     sender.sendMessage(ChatUtil.noPermission());
                     break;
+
                 case "disable":
                     if (sender.hasPermission("friendscraft.maintenance.disable")) {
-                        if (!(MaintenanceConfig.whitelistStatus)) {
-                            sender.sendMessage(ChatUtil.formatprefix("&cDe maintenance mode is al uitgeschakeld."));
-                            break;
-                        }
                         if (MaintenanceConfig.whitelistStatus) {
                             MaintenanceConfig.save("whitelist", false);
                             FriendsCraft.getInstance().reloadMaintenance();
-                            sender.sendMessage(ChatUtil.formatprefix("&9De maintenance mode is &cuitgeschakeld."));
-                            break;
-                        }
-                    }
-                    sender.sendMessage(ChatUtil.noPermission());
-                    break;
-                case "help":
-                    if (sender.hasPermission("friendscraft.help")) {
-                        sender.sendMessage(ChatUtil.formatprefix("&9Gebruik: " + commandHelp));
-                        break;
-                    }
-                    sender.sendMessage(ChatUtil.noPermission());
-                    break;
-                case "list":
-                    if (sender.hasPermission("friendscraft.maintenance.list")) {
-
-                        if (MaintenanceConfig.whitelist != null && !MaintenanceConfig.whitelist.isEmpty()) {
-                            List<UUID> whitelistUUID = MaintenanceConfig.whitelist.stream()
-                                    .map(u -> UUID.fromString(u))
-                                    .collect(Collectors.toList());
-
-                            List<String> playerNames = new ArrayList<>();
-
-                            for (UUID uuid : whitelistUUID) {
-                                String playerName = Bukkit.getOfflinePlayer(uuid).getName();
-                                if (playerName != null) {
-                                    playerNames.add(playerName);
-                                }
-                            }
-                            String playerNamesMessage = playerNames.stream()
-                                    .limit(playerNames.size() - 1) // Exclude the last element
-                                    .collect(Collectors.joining("&a, &b")) // Join elements with comma and space delimiter
-                                    + (playerNames.size() > 1 ? "&a en &b" : "") // Add " en " before the last element if there's more than one element
-                                    + playerNames.get(playerNames.size() - 1); // Add the last element
-
-                            sender.sendMessage(ChatUtil.formatprefix("&9Deze spelers staan op de maintenance whitelist: &b" + playerNamesMessage + "&9."));
-
-                        } else {
-                            sender.sendMessage(ChatUtil.formatprefix("&cEr staat niemand op de whitelist momenteel."));
-                        }
-                        break;
-                    }
-                    sender.sendMessage(ChatUtil.noPermission());
-                    break;
-                case "status":
-                    if (sender.hasPermission("friendscraft.maintenance.status")) {
-                        if (MaintenanceConfig.whitelistStatus) {
-                            sender.sendMessage(ChatUtil.formatprefix("&9De maintenance mode is momenteel &aingeschakeld."));
+                            sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.disabled));
                             break;
                         }
                         if (!(MaintenanceConfig.whitelistStatus)) {
-                            sender.sendMessage(ChatUtil.formatprefix("&9De maintenance mode is momenteel &cuitgeschakeld."));
+                            sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.disabledAl));
                             break;
                         }
                     }
                     sender.sendMessage(ChatUtil.noPermission());
                     break;
+
+                case "list":
+                    if (sender.hasPermission("friendscraft.maintenance.list")) {
+                        if (FriendsCraft.getInstance().statusEssentials()) {
+                            if (MaintenanceConfig.whitelist != null && !MaintenanceConfig.whitelist.isEmpty()) {
+                                List<String> playerNames = new ArrayList<>();
+
+                                for (String uuid : MaintenanceConfig.whitelist) {
+                                        String naam = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
+                                        User player = FriendsCraft.getInstance().getEssentials().getOfflineUser(naam);
+                                    if (player != null) {
+                                        playerNames.add(naam);
+                                    }
+                                }
+
+                                if (!playerNames.isEmpty()) {
+                                    String playerNamesMessage;
+                                    if (playerNames.size() == 1) {
+                                        sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.list.replace("%players%", playerNames.get(0)).replace("spelers", "speler").replace("staan", "staat")));
+                                        break;
+                                    } else {
+                                        playerNamesMessage = playerNames.stream()
+                                                .limit(playerNames.size() - 1) // Exclude the last element
+                                                .collect(Collectors.joining("&a, &b")) // Join elements with comma and space delimiter
+                                                + (playerNames.size() > 1 ? "&a en &b" : "") // Add " en " before the last element if there's more than one element
+                                                + playerNames.get(playerNames.size() - 1); // Add the last element
+                                    }
+                                    sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.list.replace("%players%", playerNamesMessage)));
+                                    break;
+                                }
+                            }
+                            sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.listNiemand));
+                            break;
+                        }
+                        sender.sendMessage(ChatUtil.formatprefix("&cDit command is uitgeschakeld. Bekijk console voor errors."));
+                        ChatUtil.sendConsolePrefixError("De Essentials plugin is niet gevonden op de server. Installeer deze zodat de maintenance commands add, remove en list terug werken.");
+                        break;
+                    }
+                    sender.sendMessage(ChatUtil.noPermission());
+                    break;
+
+                case "status":
+                    if (sender.hasPermission("friendscraft.maintenance.status")) {
+                        if (MaintenanceConfig.whitelistStatus) {
+                            sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.statusAan));
+                            break;
+                        }
+                        if (!(MaintenanceConfig.whitelistStatus)) {
+                            sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.statusUit));
+                            break;
+                        }
+                    }
+                    sender.sendMessage(ChatUtil.noPermission());
+                    break;
+
+                case "help":
                 default:
-                    if (sender.hasPermission("friendscraft.help")) {
-                        sender.sendMessage(ChatUtil.formatprefix("&cOnjuist commando, gebruik: " + commandHelp));
+                    if (sender.hasPermission("friendscraft.maintenance.help")) {
+                        sender.sendMessage(ChatUtil.formatprefix(MessageConfig.help.replace("%commands%", commandHelp)));
                         break;
                     }
                     sender.sendMessage(ChatUtil.noPermission());
                     break;
             }
         }
+
         if (args.length == 2) {
             switch (args[0]) {
                 case "add":
                     if (sender.hasPermission("friendscraft.maintenance.add")) {
-
-                        if  (FriendsCraft.getInstance().statusEssentials()) {
-                            User player = FriendsCraft.getInstance().getEssentials().getOfflineUser(args[1]);
-                            if (player != null) {
-                                if (!(MaintenanceCheck.checkMaintenance(player.getUUID()))) {
-
+                        if (FriendsCraft.getInstance().statusEssentials()) {
+                            if (args[1] != null) {
+                                User player = FriendsCraft.getInstance().getEssentials().getOfflineUser(args[1]);
+                                if (player != null) {
+                                    if (!(MaintenanceCheck.checkMaintenance(player.getUUID()))) {
+                                        List<String> whitelistString = new ArrayList(MaintenanceConfig.whitelist);
+                                        whitelistString.add(player.getUUID().toString());
+                                        MaintenanceConfig.save("users", whitelistString);
+                                        FriendsCraft.getInstance().reloadMaintenance();
+                                        sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.addToegevoegd.replace("%player%", player.getName())));
+                                        break;
+                                    }
+                                    if (MaintenanceCheck.checkMaintenance(player.getUUID())) {
+                                        sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.addStaatAl));
+                                        break;
+                                    } else {
+                                        sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.bestaatNiet));
+                                        break;
+                                    }
                                 }
-                                if (MaintenanceCheck.checkMaintenance(player.getUUID())) {
-
-                                }
-                            }
-                        }
-
-                        if (player != null) { //controleren of hij wel aanwezig is
-
-                            if (!(MaintenanceCheck.checkMaintenance(player.getUUID()))) {
-
-                                List<String> tmplist = new ArrayList(MaintenanceConfig.whitelist); // we maken een copy van de bestaande lijst
-                                tmplist.add(player.getUUID().toString()); //toevoegen van de UUID als string
-
-
-
-                                MaintenanceConfig.save("users", tmplist);
-                                FriendsCraft.getInstance().reloadMaintenance();
-                                sender.sendMessage(ChatUtil.formatprefix("&9Speler met naam &b" + player.getName() + "&9 werd &atoegevoegd &9aan de maintenance whitelist."));
+                                sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.bestaatNiet));
                                 break;
                             }
-                            if (MaintenanceCheck.checkMaintenance(player.getUUID())) {
-                                sender.sendMessage(ChatUtil.formatprefix("&cDeze speler staat al op de whitelist momenteel."));
-                                break;
-                            }
-                        } else {
-                            sender.sendMessage(ChatUtil.formatprefix("&cDeze speler bestaat niet of is nog nooit online geweest."));
+                            sender.sendMessage(ChatUtil.formatprefix(MessageConfig.onjuistCommand.replace("%commands%", commandHelp)));
                             break;
                         }
+                        sender.sendMessage(ChatUtil.formatprefix("&cDit command is uitgeschakeld. Bekijk console voor errors."));
+                        ChatUtil.sendConsolePrefixError("De Essentials plugin is niet gevonden op de server. Installeer deze zodat de maintenance commands add, remove en list terug werken.");
+                        break;
                     }
                     sender.sendMessage(ChatUtil.noPermission());
                     break;
 
                 case "remove":
                     if (sender.hasPermission("friendscraft.maintenance.remove")) {
-                        String player = Bukkit.getOfflinePlayer(args[1]).getName();
-
-                        if (player != null) {
-                            UUID playerUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId();
-
-                            if (MaintenanceCheck.checkMaintenance(playerUUID)) {
-                                List<UUID> whitelistUUID = MaintenanceConfig.whitelist.stream()
-                                        .map(u -> UUID.fromString(u))
-                                        .collect(Collectors.toList());
-
-                                whitelistUUID.remove(playerUUID);
-
-                                List<String> whitelistString = whitelistUUID.stream()
-                                        .map(u -> u.toString())
-                                        .collect(Collectors.toList());
-
-                                MaintenanceConfig.save("users", whitelistString);
-                                FriendsCraft.getInstance().reloadMaintenance();
-                                sender.sendMessage(ChatUtil.formatprefix("&9Speler met naam &b" + player + "&9 werd &cverwijderd &9van de maintenance whitelist."));
+                        if (FriendsCraft.getInstance().statusEssentials()) {
+                            if (args[1] != null) {
+                                User player = FriendsCraft.getInstance().getEssentials().getOfflineUser(args[1]);
+                                if (player != null) {
+                                    if (MaintenanceCheck.checkMaintenance(player.getUUID())) {
+                                        List<String> whitelistString = new ArrayList(MaintenanceConfig.whitelist);
+                                        whitelistString.remove(player.getUUID().toString());
+                                        MaintenanceConfig.save("users", whitelistString);
+                                        FriendsCraft.getInstance().reloadMaintenance();
+                                        sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.removeVerwijderd.replace("%player%", player.getName())));
+                                        break;
+                                    }
+                                    if (!(MaintenanceCheck.checkMaintenance(player.getUUID()))) {
+                                        sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.removeStaatNiet));
+                                        break;
+                                    } else {
+                                        sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.bestaatNiet));
+                                        break;
+                                    }
+                                }
+                                sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.bestaatNiet));
                                 break;
                             }
-
-                            if (!(MaintenanceCheck.checkMaintenance(playerUUID))) {
-                                sender.sendMessage(ChatUtil.formatprefix("&cDeze speler staat niet op de whitelist momenteel."));
-                                break;
-                            }
-                        } else {
-                            sender.sendMessage(ChatUtil.formatprefix("&cDeze speler bestaat niet of is nog nooit online geweest."));
+                            sender.sendMessage(ChatUtil.formatprefix(MessageConfig.onjuistCommand.replace("%commands%", commandHelp)));
                             break;
                         }
+                        sender.sendMessage(ChatUtil.formatprefix("&cDit command is uitgeschakeld. Bekijk console voor errors."));
+                        ChatUtil.sendConsolePrefixError("De Essentials plugin is niet gevonden op de server. Installeer deze zodat de maintenance commands add, remove en list terug werken.");
+                        break;
                     }
+                    sender.sendMessage(ChatUtil.noPermission());
+                    break;
+                default:
+                    if (sender.hasPermission("friendscraft.maintenance.help")) {
+                        sender.sendMessage(ChatUtil.formatprefix(MessageConfig.help.replace("%commands%", commandHelp)));
+                        break;
+                    }
+                    sender.sendMessage(ChatUtil.noPermission());
                     break;
             }
         }
@@ -219,23 +227,20 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
                 return Bukkit.getOnlinePlayers().stream().filter(player -> player.getName().regionMatches(true,0,args[1],0,args[1].length())).map(Player::getName).collect(Collectors.toList());
             }
             if (args[0].equalsIgnoreCase("remove")) {
-                List<UUID> whitelistUUID = MaintenanceConfig.whitelist.stream()
-                        .map(u -> UUID.fromString(u))
-                        .collect(Collectors.toList());
-
-                List<String> whitelistStringName = new ArrayList<>();
-
-                for (UUID uuid : whitelistUUID) {
-                    String playerName = Bukkit.getOfflinePlayer(uuid).getName();
-                    if (playerName != null) {
-                        whitelistStringName.add(playerName);
+                if (FriendsCraft.getInstance().statusEssentials()) {
+                    List<String> playerNames = new ArrayList<>();
+                    for (String uuid : MaintenanceConfig.whitelist) {
+                        String naam = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
+                        User player = FriendsCraft.getInstance().getEssentials().getOfflineUser(naam);
+                        if (player != null) {
+                            playerNames.add(naam);
+                        }
                     }
+
+                    return playerNames.stream()
+                            .filter(playerName -> playerName.regionMatches(true, 0, args[1], 0, args[1].length()))
+                            .collect(Collectors.toList());
                 }
-
-
-                return whitelistStringName.stream()
-                        .filter(playerName -> playerName.regionMatches(true, 0, args[1], 0, args[1].length()))
-                        .collect(Collectors.toList());
             }
         }
         return new ArrayList<>();

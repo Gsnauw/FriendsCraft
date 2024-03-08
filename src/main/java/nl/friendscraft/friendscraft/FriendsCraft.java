@@ -5,10 +5,7 @@ import nl.friendscraft.friendscraft.commands.AdminCommand;
 import nl.friendscraft.friendscraft.commands.MaintenanceCommand;
 import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
-import nl.friendscraft.friendscraft.events.DoubleShulkerShells;
-import nl.friendscraft.friendscraft.events.PlayerJoin;
-import nl.friendscraft.friendscraft.events.PlayerLogin;
-import nl.friendscraft.friendscraft.events.PlayerQuit;
+import nl.friendscraft.friendscraft.events.*;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,7 +35,7 @@ public final class FriendsCraft extends JavaPlugin {
             ChatUtil.sendConsolePrefixInfo("Connectie met Essentials gemaakt.");
         }
         if (!statusEssentials()) {
-            ChatUtil.sendConsolePrefixError("Essentials plugin niet gevonden. Maintenance commands add en list uitschakelen...");
+            ChatUtil.sendConsolePrefixError("Essentials plugin niet gevonden. Maintenance commands add, remove en list uitschakelen...");
         }
 
         this.getCommand("friendscraftadmin").setExecutor(new AdminCommand());
@@ -47,6 +44,7 @@ public final class FriendsCraft extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
+        this.getServer().getPluginManager().registerEvents(new MOTD(), this);
 
         Bukkit.getServer().getLogger().info("[Friends-Craft] Plugin enabled, Hello World");
     }
