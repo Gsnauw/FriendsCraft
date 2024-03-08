@@ -133,7 +133,7 @@ public class DefaultConfig {
 
     public static Boolean debug = false;
     public static String motd1 = "&6Friends&6-&9Craft&e";
-    public static String motd2 = "&f&bDe server voor jou!";
+    public static String motd2 = "&f&lDe server voor jou!";
     public static String maintenanceMotd1 = "&6De server is momenteel in onderhoud.";
     public static String maintenanceMotd2 = "&eKom later terug om te spelen op &bFriends&6-&9Craft&e!";
     private static void DefaultConfigs() {
@@ -143,5 +143,4 @@ public class DefaultConfig {
         maintenanceMotd1 = getString("maintenance_motd_lijn_1", maintenanceMotd1);
         maintenanceMotd2 = getString("maintenance_motd_lijn_2", maintenanceMotd2);
     }
-
 }
