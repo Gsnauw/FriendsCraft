@@ -136,10 +136,27 @@ public class MaintenanceConfig {
 
     public static String maintenanceKick = "De server ondergaat momenteel onderhoud. Probeer het later opnieuw.";
     public static String maintenanceOnlineKick = "De server is in maintenance mode geplaatst. Join later terug.";
+    public static String addStaatAl = "&cDeze speler staat al op de whitelist momenteel.";
+    public static String addToegevoegd = "&9Speler met naam &b%player% &9werd &atoegevoegd &9aan de maintenance whitelist.";
+    public static String removeStaatNiet = "&cDeze speler staat al op de whitelist momenteel.";
+    public static String removeVerwijderd = "&cDeze speler staat al op de whitelist momenteel.";
+    public static String statusAan = "&9De maintenance mode is momenteel &aingeschakeld.";
+    public static String statusUit = "&9De maintenance mode is momenteel &cuitgeschakeld.";
+    public static String enabled = "&9De maintenance mode is &aingeschakeld.";
+    public static String enabledAl = "&cDe maintenance mode is al ingeschakeld.";
+    public static String disabled = "&9De maintenance mode is uitgeschakeld.";
+    public static String disabledAl = "&cDe maintenance mode is al uitgeschakeld.";
+
+    public static String list = "&9Deze spelers staan op de maintenance whitelist: &b%players% &9.";
+    public static String listNiemand = "&cEr staat niemand op de whitelist momenteel.";
+
+    public static String bestaatNiet = "&cDeze speler bestaat niet of is nog nooit online geweest.";
+    public static String onjuistCommand = "&cOnjuist commando, gebruik: %commands%";
+    public static String help = "&cGebruik: %commands%";
 
     private static void maintenanceMessages() {
-        maintenanceKick = getString("kick_bericht", maintenanceKick);
-        maintenanceOnlineKick = getString("kick_bericht_online", maintenanceOnlineKick);
+        maintenanceKick = getString("berichten.kick_bericht", maintenanceKick);
+        maintenanceOnlineKick = getString("berichten.kick_bericht_online", maintenanceOnlineKick);
     }
 
     public static Boolean whitelistStatus = false;

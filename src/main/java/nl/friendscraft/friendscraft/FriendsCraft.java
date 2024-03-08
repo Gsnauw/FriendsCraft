@@ -9,6 +9,7 @@ import nl.friendscraft.friendscraft.events.DoubleShulkerShells;
 import nl.friendscraft.friendscraft.events.PlayerJoin;
 import nl.friendscraft.friendscraft.events.PlayerLogin;
 import nl.friendscraft.friendscraft.events.PlayerQuit;
+import nl.friendscraft.friendscraft.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import nl.friendscraft.friendscraft.configs.DefaultConfig;
@@ -32,9 +33,12 @@ public final class FriendsCraft extends JavaPlugin {
         messageConfig = new MessageConfig("message.yml",this);
         maintenanceConfig = new MaintenanceConfig("maintenance.yml",this);
 
-        if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
+        if (statusEssentials()) {
             this.essentials = (IEssentials) Bukkit.getPluginManager().getPlugin("Essentials");
-            Bukkit.getServer().getLogger().log(Level.INFO, "[Ultimatekingdom] Hooking essentials!");
+            ChatUtil.sendConsolePrefixInfo("Connectie met Essentials gemaakt.");
+        }
+        if (!statusEssentials()) {
+            ChatUtil.sendConsolePrefixError("Essentials plugin niet gevonden. Maintenance commands add en list uitschakelen...");
         }
 
         this.getCommand("friendscraftadmin").setExecutor(new AdminCommand());
@@ -45,6 +49,13 @@ public final class FriendsCraft extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
 
         Bukkit.getServer().getLogger().info("[Friends-Craft] Plugin enabled, Hello World");
+    }
+
+    public boolean statusEssentials() {
+        if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
+            return true;
+        }
+        return false;
     }
 
     @Override

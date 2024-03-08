@@ -126,7 +126,7 @@ public class MessageConfig {
     }
 
     public static String prefix = "&7[&bFriends&6-&9Craft&7] &8-> ";
-    public static String geenpermissie = "&cJe hebt geen toegang om deze actie uit te voeren.";
+    public static String geenpermissie = "&cJe mag deze actie uit te voeren.";
     private static void DefaultMessages() {
         prefix = getString("prefix", prefix);
         geenpermissie = getString("geenpermissie", geenpermissie);

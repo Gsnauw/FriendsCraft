@@ -29,7 +29,13 @@ public class ChatUtil {
     }
 
     static String ConsolePrefix = "[Friends-Craft] ";
-    public static void sendConsolePrefix(String text) {
+    public static void sendConsolePrefixInfo(String text) {
         Bukkit.getServer().getLogger().info(ConsolePrefix + text);
+    }
+    public static void sendConsolePrefixWarn(String text) {
+        Bukkit.getServer().getLogger().warning(ConsolePrefix + text);
+    }
+    public static void sendConsolePrefixError(String text) {
+        Bukkit.getServer().getLogger().severe(ConsolePrefix + text);
     }
 }
