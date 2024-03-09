@@ -41,7 +41,6 @@ public final class FriendsCraft extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
-        this.getServer().getPluginManager().registerEvents(new MOTD(), this);
 
         Bukkit.getServer().getLogger().info("[Friends-Craft] Plugin enabled, Hello World");
     }
