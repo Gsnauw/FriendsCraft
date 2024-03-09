@@ -36,7 +36,7 @@ public class AdminCommand implements CommandExecutor, TabCompleter {
                     case "reload":
                         if (sender.hasPermission("friendscraft.admin.reload")) {
                             FriendsCraft.getInstance().reload();
-                            sender.sendMessage(ChatUtil.formatprefix("&9De plugin is gereload."));
+                            sender.sendMessage(ChatUtil.formatprefix(MessageConfig.reload));
                             break;
                         }
                         sender.sendMessage(ChatUtil.noPermission());
