@@ -46,12 +46,6 @@ public class AdminCommand implements CommandExecutor, TabCompleter {
                         }
                         sender.sendMessage(ChatUtil.noPermission());
                         break;
-                    case "goeiemuurtjes":
-                            sender.sendMessage(ChatUtil.formatprefix("&d&lGilles&6 heeft &a&ngoeie&6 muurtjes."));
-                            break;
-                    case "slechtemuurtjes":
-                        sender.sendMessage(ChatUtil.formatprefix("&4&lBryan&6 heeft &c&nslechte&6 muurtjes."));
-                        break;
                     case "help":
                     default:
                         if (sender.hasPermission("friendscraft.admin.help")) {
