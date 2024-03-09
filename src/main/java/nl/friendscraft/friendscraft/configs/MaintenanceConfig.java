@@ -169,9 +169,11 @@ public class MaintenanceConfig {
     }
 
     public static Boolean whitelistStatus = false;
+    public static int httpserverport = 2609;
     public static List<String> whitelist = new ArrayList<>();
     private static void maintenanceConfig() {
         whitelist = getList("users", whitelist);
+        httpserverport = getInt("HTTP_server_port", httpserverport);
         whitelistStatus = getBoolean("whitelist", whitelistStatus);
     }
 }

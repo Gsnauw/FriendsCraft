@@ -132,8 +132,8 @@ public class DefaultConfig {
     }
 
     public static Boolean debug = false;
-    public static String motd1 = "&6Friends&6-&9Craft&e";
-    public static String motd2 = "&f&lDe server voor jou!";
+    public static String motd1 = "&bFriends&6-&9Craft&e";
+    public static String motd2 = "&fDe server voor jou en je vrienden!";
     public static String maintenanceMotd1 = "&6De server is momenteel in onderhoud.";
     public static String maintenanceMotd2 = "&eKom later terug om te spelen op &bFriends&6-&9Craft&e!";
     private static void DefaultConfigs() {

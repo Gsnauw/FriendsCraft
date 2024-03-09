@@ -1,6 +1,7 @@
 package nl.friendscraft.friendscraft;
 
 import com.earth2me.essentials.IEssentials;
+import nl.friendscraft.friendscraft.checks.MaintenanceStatus;
 import nl.friendscraft.friendscraft.commands.AdminCommand;
 import nl.friendscraft.friendscraft.commands.MaintenanceCommand;
 import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
@@ -11,16 +12,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import nl.friendscraft.friendscraft.configs.DefaultConfig;
 
-import java.util.logging.Level;
-
 public final class FriendsCraft extends JavaPlugin {
 
     private DefaultConfig defaultConfig;
     private MessageConfig messageConfig;
     private MaintenanceConfig maintenanceConfig;
     static FriendsCraft friendsCraft;
-
     private IEssentials essentials;
+
+    private MaintenanceStatus maintenanceStatus;
 
     @Override
     public void onEnable() {
@@ -46,8 +46,13 @@ public final class FriendsCraft extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerLogin(), this);
         this.getServer().getPluginManager().registerEvents(new MOTD(), this);
 
+        maintenanceStatus = new MaintenanceStatus(this);
+        maintenanceStatus.startHttpServer();
+
+
         Bukkit.getServer().getLogger().info("[Friends-Craft] Plugin enabled, Hello World");
     }
+
 
     public boolean statusEssentials() {
         if (Bukkit.getServer().getPluginManager().getPlugin("Essentials") != null) {
@@ -59,6 +64,10 @@ public final class FriendsCraft extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.getServer().getLogger().info("[Friends-Craft] Plugin disabled, Bye!");
+
+        if (maintenanceStatus != null) {
+            maintenanceStatus.stopHttpServer();
+        }
     }
 
     public void reload() {

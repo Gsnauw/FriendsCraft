@@ -11,16 +11,16 @@ public class MaintenanceCheck {
 
     public static boolean checkMaintenance(UUID playerUUID) {
 
-            List<UUID> whitelistUUID = MaintenanceConfig.whitelist.stream()
-                    .map(u -> UUID.fromString(u))
-                    .collect(Collectors.toList());
-            Debug.format(whitelistUUID.toString());
+        List<UUID> whitelistUUID = MaintenanceConfig.whitelist.stream()
+                .map(u -> UUID.fromString(u))
+                .collect(Collectors.toList());
+        Debug.format(whitelistUUID.toString());
 
-            for (UUID blk : whitelistUUID) {
-                if (blk.equals(playerUUID)) {
-                    return true;
-                }
+        for (UUID blk : whitelistUUID) {
+            if (blk.equals(playerUUID)) {
+                return true;
             }
+        }
         return false;
     }
 }
