@@ -5,18 +5,12 @@ api-version: '1.20'
 prefix: Friends-Craft
 authors: [ Gilles ]
 description: De algemene Friends-Craft plugin.
-softdepend:
-  - Essentials
 commands:
   friendscraftadmin:
     description: Het Friends-Craft Admin command.
     aliases: [ fca ]
     default: op
     permission: friendscraft.admin
-  maintenance:
-    description: Het Friends-Craft maintenance command.
-    aliases: [ fcm ]
-    permission: friendscraft.maintenance
 
 permissions:
   friendscraft.*:
@@ -42,56 +36,3 @@ permissions:
     description: Krijg het help command.
     children:
       friendscraft.admin: true
-
-  friendscraft.maintenance.*:
-    description: Geeft alle maintenance permissies in één keer.
-    default: op
-    children:
-      friendscraft.maintenance.enable: true
-      friendscraft.maintenance.disable: true
-      friendscraft.maintenance.status: true
-      friendscraft.maintenance.help: true
-      friendscraft.maintenance.add: true
-      friendscraft.maintenance.remove: true
-      friendscraft.maintenance.list: true
-
-  friendscraft.maintenance.enable:
-    description: Enable de whitelist.
-    children:
-      friendscraft.maintenance.help: true
-      friendscraft.maintenance: true
-
-  friendscraft.maintenance.disable:
-    description: Disable de whitelist.
-    children:
-      friendscraft.maintenance.help: true
-      friendscraft.maintenance: true
-
-  friendscraft.maintenance.status:
-    description: Bekijk de status van de whitelist.
-    children:
-      friendscraft.maintenance.help: true
-      friendscraft.maintenance: true
-
-  friendscraft.maintenance.help:
-    description: Krijg het help command.
-    children:
-      friendscraft.maintenance: true
-
-  friendscraft.maintenance.add:
-    description: Voeg iemand toe aan de whitelist.
-    children:
-      friendscraft.maintenance.help: true
-      friendscraft.maintenance: true
-
-  friendscraft.maintenance.remove:
-    description: Verwijder iemand van de whitelist.
-    children:
-      friendscraft.maintenance.help: true
-      friendscraft.maintenance: true
-
-  friendscraft.maintenance.list:
-    description: Krijg een lijst van spelers op de whitelist.
-    children:
-      friendscraft.maintenance.help: true
-      friendscraft.maintenance: true
