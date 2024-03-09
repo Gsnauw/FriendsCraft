@@ -3,6 +3,7 @@ package nl.friendscraft.friendscraft.commands;
 import nl.friendscraft.friendscraft.FriendsCraft;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
+import org.apache.logging.log4j.message.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,7 +37,7 @@ public class AdminCommand implements CommandExecutor, TabCompleter {
                     case "reload":
                         if (sender.hasPermission("friendscraft.admin.reload")) {
                             FriendsCraft.getInstance().reload();
-                            sender.sendMessage(ChatUtil.formatprefix("&9De plugin is gereload."));
+                            sender.sendMessage(ChatUtil.formatprefix(MessageConfig.reload));
                             break;
                         }
                         sender.sendMessage(ChatUtil.noPermission());
