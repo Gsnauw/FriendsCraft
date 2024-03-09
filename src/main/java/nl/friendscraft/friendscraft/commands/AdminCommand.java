@@ -3,10 +3,15 @@ package nl.friendscraft.friendscraft.commands;
 import nl.friendscraft.friendscraft.FriendsCraft;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -23,7 +28,7 @@ public class AdminCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length == 0) {
-            if (sender.hasPermission("friendscraft.maintenance.help")) {
+            if (sender.hasPermission("friendscraft.admin.help")) {
                 sender.sendMessage(ChatUtil.formatprefix(MessageConfig.onjuistCommand.replace("%commands%", commandHelp).replace("&b", "")));
                 return false;
             }
@@ -40,6 +45,12 @@ public class AdminCommand implements CommandExecutor, TabCompleter {
                             break;
                         }
                         sender.sendMessage(ChatUtil.noPermission());
+                        break;
+                    case "goeiemuurtjes":
+                            sender.sendMessage(ChatUtil.formatprefix("&d&lGilles&6 heeft &a&ngoeie&6 muurtjes."));
+                            break;
+                    case "slechtemuurtjes":
+                        sender.sendMessage(ChatUtil.formatprefix("&4&lBryan&6 heeft &c&nslechte&6 muurtjes."));
                         break;
                     case "help":
                     default:
