@@ -134,12 +134,12 @@ public class MaintenanceConfig {
     }
 
 
-    public static String maintenanceKick = "De server ondergaat momenteel onderhoud. Probeer het later opnieuw.";
-    public static String maintenanceOnlineKick = "De server is in maintenance mode geplaatst. Join later terug.";
-    public static String addStaatAl = "&cDeze speler staat al op de whitelist momenteel.";
-    public static String addToegevoegd = "&9Speler met naam &b%player% &9werd &atoegevoegd &9aan de maintenance whitelist.";
-    public static String removeStaatNiet = "&cDeze speler staat niet op de whitelist momenteel.";
-    public static String removeVerwijderd = "&9Speler met naam &b%player% &9werd &cverwijderd &9van de maintenance whitelist.";
+    public static String maintenanceKick = "De server ondergaat momenteel onderhoud. Probeer het later opnieuw!";
+    public static String maintenanceOnlineKick = "De server is in maintenance mode geplaatst, je kunt later weer joinen.";
+    public static String addStaatAl = "&cDeze speler staat momenteel al op de whitelist.";
+    public static String addToegevoegd = "&9De speler met de naam: &b%player%&9, werd &atoegevoegd &9aan de maintenance whitelist.";
+    public static String removeStaatNiet = "&cDeze speler staat momenteel niet op de whitelist.";
+    public static String removeVerwijderd = "&9De speler met de naam: &b%player%&9, werd &cverwijderd &9van de maintenance whitelist.";
     public static String statusAan = "&9De maintenance mode is momenteel &aingeschakeld&9.";
     public static String statusUit = "&9De maintenance mode is momenteel &cuitgeschakeld&9.";
     public static String enabled = "&9De maintenance mode is &aingeschakeld&9.";
@@ -147,7 +147,7 @@ public class MaintenanceConfig {
     public static String disabled = "&9De maintenance mode is &cuitgeschakeld&9.";
     public static String disabledAl = "&cDe maintenance mode is al uitgeschakeld.";
     public static String list = "&9Deze spelers staan op de maintenance whitelist: &b%players%&9.";
-    public static String listNiemand = "&cEr staat niemand op de whitelist momenteel.";
+    public static String listNiemand = "&cEr staat momenteel niemand op de whitelist.";
     public static String bestaatNiet = "&cDeze speler bestaat niet of is nog nooit online geweest.";
 
     private static void maintenanceMessages() {
