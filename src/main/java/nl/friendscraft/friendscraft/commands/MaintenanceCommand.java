@@ -57,6 +57,10 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
                             MaintenanceConfig.save("whitelist", true);
                             FriendsCraft.getInstance().reloadMaintenance();
                             MaintenanceKick.enable();
+                            if (sender instanceof Player) {
+                                Player player = (Player) sender;
+                                MaintenanceKick.broadcastEnable(player);
+                            }
                             sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.enabled));
                             break;
                         }
@@ -67,12 +71,15 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
                     }
                     sender.sendMessage(ChatUtil.noPermission());
                     break;
-
                 case "disable":
                     if (sender.hasPermission("friendscraft.maintenance.disable")) {
                         if (MaintenanceConfig.whitelistStatus) {
                             MaintenanceConfig.save("whitelist", false);
                             FriendsCraft.getInstance().reloadMaintenance();
+                            if (sender instanceof Player) {
+                                Player player = (Player) sender;
+                                MaintenanceKick.broadcastDisable(player);
+                            }
                             sender.sendMessage(ChatUtil.formatprefix(MaintenanceConfig.disabled));
                             break;
                         }
