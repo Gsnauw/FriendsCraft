@@ -1,22 +1,28 @@
 package nl.friendscraft.friendscraft.commands;
 
 import com.earth2me.essentials.User;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import nl.friendscraft.friendscraft.FriendsCraft;
 import nl.friendscraft.friendscraft.checks.MaintenanceCheck;
 import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.events.MaintenanceKick;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
-import nl.friendscraft.friendscraft.gui.MaintenanceGui;
+import nl.friendscraft.friendscraft.utils.MaintenanceGui;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

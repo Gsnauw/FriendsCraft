@@ -149,6 +149,8 @@ public class MaintenanceConfig {
     public static String list = "&9Deze spelers staan op de maintenance whitelist: &b%players%&9.";
     public static String listNiemand = "&cEr staat momenteel niemand op de whitelist.";
     public static String bestaatNiet = "&cDeze speler bestaat niet of is nog nooit online geweest.";
+    public static String broadcastEnable = "&9De maintenance mode is &aingeschakeld&9.";
+    public static String broadcastDisable = "&9De maintenance mode is &cuitgeschakeld&9.";
 
     private static void maintenanceMessages() {
         maintenanceKick = getString("berichten.kick_bericht", maintenanceKick);
@@ -166,6 +168,8 @@ public class MaintenanceConfig {
         list = getString("berichten.lijst", list);
         listNiemand = getString("berichten.niemand_op_lijst", listNiemand);
         bestaatNiet = getString("berichten.bestaat_niet", bestaatNiet);
+        broadcastEnable = getString("berichten.broadcast_enable", broadcastEnable);
+        broadcastDisable = getString("berichten.broadcast_disable", broadcastDisable);
     }
 
     public static Boolean whitelistStatus = false;
