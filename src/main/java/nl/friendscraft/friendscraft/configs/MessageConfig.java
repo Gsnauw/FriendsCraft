@@ -129,7 +129,7 @@ public class MessageConfig {
     public static String geenpermissie = "&cJe mag deze actie niet uitvoeren.";
     public static String onjuistCommand = "&cOnjuist commando, gebruik: %commands%";
     public static String help = "&9Gebruik: %commands%";
-    public static String reload = "De plugin is gereload.";
+    public static String reload = "De plugin is herladen.";
 
     private static void DefaultMessages() {
         prefix = getString("prefix", prefix);
