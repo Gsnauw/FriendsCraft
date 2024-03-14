@@ -1,19 +1,25 @@
 package nl.friendscraft.friendscraft.gui;
 
+import com.earth2me.essentials.User;
+import nl.friendscraft.friendscraft.FriendsCraft;
+import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
 import nl.friendscraft.friendscraft.utils.Gui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 public class MaintenanceSpelerGui {
 
-    public static void openSpelerGui(Player player) {
+    public static void openSpelerMainGui(Player player) {
         Inventory maintenanceSpelerGui = Bukkit.createInventory(player, 9, ChatUtil.format("&6&lMaintenance &b&lSpelers &e&lMenu"));
 
         ItemStack addHead = new ItemStack(Material.PLAYER_HEAD);
@@ -43,6 +49,31 @@ public class MaintenanceSpelerGui {
         Gui.fillGui(maintenanceSpelerGui);
 
         player.openInventory(maintenanceSpelerGui);
+    }
+
+    public static void openSpelerListGui(Player player) {
+        Inventory maintenanceSpelerListGui = Bukkit.createInventory(player, 36, ChatUtil.format("&6&lMaintenance &b&lList &e&lMenu"));
+
+        ItemStack listHSpelershead = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta listSpelersMeta = (SkullMeta) listHSpelershead.getItemMeta();
+
+        for (String uuid : MaintenanceConfig.whitelist) {
+            String naam = Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
+            OfflinePlayer OfflinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            User speler = FriendsCraft.getInstance().getEssentials().getOfflineUser(naam);
+            if (speler != null) {
+                listSpelersMeta.setOwningPlayer(OfflinePlayer);
+                listSpelersMeta.setDisplayName(ChatUtil.format(naam));
+                listSpelersMeta.setLore(Arrays.asList(ChatUtil.format("UUID: " + uuid)));
+                listHSpelershead.setItemMeta(listSpelersMeta);
+                //maintenanceSpelerListGui.setItem(1, listHSpelershead);
+                maintenanceSpelerListGui.addItem(listHSpelershead);
+            }
+        }
+
+        Gui.fillGui(maintenanceSpelerListGui);
+
+        player.openInventory(maintenanceSpelerListGui);
     }
 
 }

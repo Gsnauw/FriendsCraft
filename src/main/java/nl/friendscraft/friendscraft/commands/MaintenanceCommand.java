@@ -7,6 +7,7 @@ import nl.friendscraft.friendscraft.configs.MaintenanceConfig;
 import nl.friendscraft.friendscraft.configs.MessageConfig;
 import nl.friendscraft.friendscraft.events.MaintenanceKick;
 import nl.friendscraft.friendscraft.gui.MaintenanceGui;
+import nl.friendscraft.friendscraft.gui.MaintenanceSpelerGui;
 import nl.friendscraft.friendscraft.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -42,7 +43,7 @@ public class MaintenanceCommand implements CommandExecutor, TabCompleter {
                     if (sender.hasPermission("friendscraft.maintenance.menu")) {
                     if (sender instanceof Player) {
                         Player player = (Player) sender;
-                        MaintenanceGui.openGui(player);
+                        MaintenanceSpelerGui.openSpelerListGui(player);
                         break;
                     }
                     ChatUtil.playerCommand();
