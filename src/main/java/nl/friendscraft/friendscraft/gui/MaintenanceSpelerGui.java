@@ -63,10 +63,9 @@ public class MaintenanceSpelerGui {
             User speler = FriendsCraft.getInstance().getEssentials().getOfflineUser(naam);
             if (speler != null) {
                 listSpelersMeta.setOwningPlayer(OfflinePlayer);
-                listSpelersMeta.setDisplayName(ChatUtil.format(naam));
+                listSpelersMeta.setDisplayName(ChatUtil.format("&b" + naam));
                 listSpelersMeta.setLore(Arrays.asList(ChatUtil.format("UUID: " + uuid)));
                 listHSpelershead.setItemMeta(listSpelersMeta);
-                //maintenanceSpelerListGui.setItem(1, listHSpelershead);
                 maintenanceSpelerListGui.addItem(listHSpelershead);
             }
         }
